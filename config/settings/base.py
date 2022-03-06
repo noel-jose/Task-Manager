@@ -332,3 +332,4 @@ SPECTACULAR_SETTINGS = {
 }
 # Your stuff...
 # ------------------------------------------------------------------------------
+STATIC_ROOT = ROOT_DIR / "staticfiles"
