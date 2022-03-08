@@ -6,9 +6,13 @@
 {% block content %}
 
 
+
 <div class="flex items-center justify-between">
     <h1 class="text-3xl font-semibold py-4">Hi {{ alltasks.name }}</h1>
-    <a class = "text-l font-semibold py-4 text-red-600" href="/user/logout">Logout</a>
+    <div class="flex flex-row">
+        <a class = "mt-1"href="/reminder"><div class = "bg-red-700 p-2 m-2 rounded-md"><img style="height: 14px;" src="{%static 'tasks/clock.png' %}" alt="clock icon"></div></a>
+        <a class = "text-l font-semibold py-4 text-red-600" href="/user/logout">Logout</a>
+    </div>
 </div>
 
 <p class="text-grey-500 text-l font-regular">{{ alltasks.completed_count }} of {{ alltasks.total_count }} tasks completed</p>

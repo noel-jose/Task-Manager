@@ -7,7 +7,7 @@ from django.views.generic import TemplateView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.authtoken.views import obtain_auth_token
 from django.contrib.auth.views import LogoutView
-
+from django.shortcuts import redirect
 
 from tasks.views import (
     GenericAllTaskView,
@@ -29,7 +29,7 @@ from tasks.apiviews import TaskHistoryViewSet, TaskListAPI, TaskViewSet
 from rest_framework.routers import SimpleRouter
 
 urlpatterns = [
-    path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
+    # path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
     path(
         "about/", TemplateView.as_view(template_name="pages/about.html"), name="about"
     ),
@@ -41,7 +41,7 @@ urlpatterns = [
     # Your stuff: custom urls includes go here
     path("admin/", admin.site.urls),
     path("tasks/", GenericTaskView.as_view()),
-    path("", GenericAllTaskView.as_view()),
+    path("", GenericTaskView.as_view()),
     path("create-task/", GenericTaskCreateView.as_view()),
     path("delete-task/<pk>/", GenericTaskDeleteView.as_view()),
     path("complete_task/<pk>/", GenericTaskCompleteView.as_view()),
