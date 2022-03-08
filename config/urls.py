@@ -6,6 +6,27 @@ from django.views import defaults as default_views
 from django.views.generic import TemplateView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.authtoken.views import obtain_auth_token
+from django.contrib.auth.views import LogoutView
+
+
+from tasks.views import (
+    GenericAllTaskView,
+    GenericCompletedTaskView,
+    GenericTaskCompleteView,
+    GenericTaskCreateView,
+    GenericTaskDeleteView,
+    GenericTaskDetailView,
+    GenericTaskUpdateView,
+    GenericTaskView,
+    UserCreateView,
+    UserLoginView,
+    session_storage_view,
+    ReminderTimeSetView,
+)
+
+from tasks.apiviews import TaskHistoryViewSet, TaskListAPI, TaskViewSet
+
+from rest_framework.routers import SimpleRouter
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
@@ -18,7 +39,27 @@ urlpatterns = [
     path("users/", include("task_manager.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
+    path("admin/", admin.site.urls),
+    path("tasks/", GenericTaskView.as_view()),
+    path("", GenericAllTaskView.as_view()),
+    path("create-task/", GenericTaskCreateView.as_view()),
+    path("delete-task/<pk>/", GenericTaskDeleteView.as_view()),
+    path("complete_task/<pk>/", GenericTaskCompleteView.as_view()),
+    path("completed_tasks/", GenericCompletedTaskView.as_view()),
+    path("all_tasks/", GenericAllTaskView.as_view()),
+    path("update-task/<pk>/", GenericTaskUpdateView.as_view()),
+    path("detail-task/<pk>/", GenericTaskDetailView.as_view()),
+    path("sessiontest", session_storage_view),
+    path("user/signup", UserCreateView.as_view()),
+    path("user/login", UserLoginView.as_view()),
+    path("reminder", ReminderTimeSetView.as_view()),
+    path("user/logout", LogoutView.as_view()),
+    # path("test_bg", test_bg),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+router = SimpleRouter()
+router.register(prefix="api/tasks", viewset=TaskViewSet)
+router.register(prefix="api/history/task", viewset=TaskHistoryViewSet)
 
 # API URLS
 urlpatterns += [
@@ -32,7 +73,7 @@ urlpatterns += [
         SpectacularSwaggerView.as_view(url_name="api-schema"),
         name="api-docs",
     ),
-]
+] + router.urls
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit

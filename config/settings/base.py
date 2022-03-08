@@ -82,11 +82,13 @@ THIRD_PARTY_APPS = [
     "rest_framework.authtoken",
     "corsheaders",
     "drf_spectacular",
+    "django_filters",
 ]
 
 LOCAL_APPS = [
     "task_manager.users",
     # Your stuff: custom apps go here
+    "tasks",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -106,9 +108,11 @@ AUTHENTICATION_BACKENDS = [
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
 AUTH_USER_MODEL = "users.User"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
-LOGIN_REDIRECT_URL = "users:redirect"
+LOGIN_REDIRECT_URL = "/tasks"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
-LOGIN_URL = "account_login"
+LOGIN_URL = "/user/login"
+LOGOUT_REDIRECT_URL = "/user/login"
+
 
 # PASSWORDS
 # ------------------------------------------------------------------------------
@@ -333,3 +337,8 @@ SPECTACULAR_SETTINGS = {
 # Your stuff...
 # ------------------------------------------------------------------------------
 STATIC_ROOT = ROOT_DIR / "staticfiles"
+
+
+# BROKER_URL = "redis://localhost:6379"
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

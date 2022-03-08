@@ -1,0 +1,6 @@
+<h1>This is the date form </h1>
+<form action="/reminder" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit">
+</form>
