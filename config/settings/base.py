@@ -336,7 +336,7 @@ SPECTACULAR_SETTINGS = {
 }
 # Your stuff...
 # ------------------------------------------------------------------------------
-STATIC_ROOT = ROOT_DIR / "staticfiles"
+# STATIC_ROOT = ROOT_DIR / "staticfiles"
 
 
 # BROKER_URL = "redis://localhost:6379"
